@@ -1,0 +1,25 @@
+{
+  "name": "simple-rest-api-books-mongodb",
+  "version": "1.0.0",
+  "description": "Simple REST API using Node.js,Express.js and MongoDB",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "prettier": "prettier --write \"**/*.js\""
+  },
+  "author": "Knarik",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.0",
+    "prettier": "^3.2.5"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "joi": "^17.13.1",
+    "moment": "^2.30.1"
+  }
+}
+
