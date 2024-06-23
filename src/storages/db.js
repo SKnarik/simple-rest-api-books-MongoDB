@@ -1,7 +1,6 @@
 import { MongoClient } from 'mongodb';
 
-const MONGO_URI = 'mongodb+srv://knariksoghoyanfd:PuvsirctSI3k5dOA@cluster13.joekyik.mongodb.net/';
-const MONGO_DB = 'BooksFreeDOM';
+const { MONGO_URI, MONGO_DB } = process.env;
 
 let mongoClient;
 let dbConnection;
