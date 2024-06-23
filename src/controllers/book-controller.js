@@ -46,16 +46,11 @@ export const createBook = async (req, res) => {
 export const getBooks = async (req, res) => {
 
     try {
-        const db = await connection();
-        const booksCollection = db.collection('books');
         const books = await booksCollection.find().toArray(); 
-        res.status(200).json(books); 
+        res.status(200).send({ books });
     } catch (error) {
-        console.error('Error fetching books:', error.message);
-        res.status(500).json({ message: 'Failed to fetch books.' });
+      res.status(400).send({ error: error.message });
     }
-
-
 };
 
 export const getBook = (req, res) => {
