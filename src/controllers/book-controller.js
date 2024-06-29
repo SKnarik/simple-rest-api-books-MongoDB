@@ -14,8 +14,7 @@ export const createBook = async (req, res) => {
     const { error } = bookValidationSchema.validate(req.body);
 
     if (error) {
-      res.status(403).send(error.message);
-      return;
+      return res.status(403).send(error.message); 
     }
 
     const newBook = {
@@ -30,8 +29,7 @@ export const createBook = async (req, res) => {
 
     const isExisting = await booksCollection.findOne({ title });
     if (isExisting) {
-      res.status(400).send("Book already exists.");
-      return;
+      return res.status(400).send("Book already exists.");
     }
 
     const books = await booksCollection.insertOne(newBook);
@@ -88,4 +86,21 @@ export const updateBook = async (req, res) => {
     res.status(404).send({ error: error.message });
   }
 };
-export const deleteBook = (req, res) => {};
+
+export const deleteBook = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      throw new Error("ID parameter is required");
+    }
+
+    const deletedBook = await booksCollection.deleteOne({ _id: new ObjectId(id) });
+    if (!deletedBook) {
+      throw new Error("Book not found or not deleted.");
+    }
+    res.status(200).send({ book: deletedBook });
+  } catch (error) {
+    res.status(404).send({ error: error.message });
+  }
+};
