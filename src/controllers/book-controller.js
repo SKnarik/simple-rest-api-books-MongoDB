@@ -1,6 +1,7 @@
 import moment from "moment";
 import { bookValidationSchema } from "../validations/book-validation.js";
 import { connection } from "../storages/db.js";
+import { ObjectId } from "mongodb";
 
 const db = await connection();
 const booksCollection = db.collection('books');
@@ -53,8 +54,20 @@ export const getBooks = async (req, res) => {
     }
 };
 
-export const getBook = (req, res) => {
+export const getBook = async (req, res) => {
 
+  try {
+    const { id } = req.params;
+    const thisBook = await booksCollection.findOne ({_id: new ObjectId(id)});  
+
+    if (!thisBook) {
+      throw new Error("Book not found");
+    }
+
+    res.status(200).send({ book: thisBook });
+  } catch (error) {
+    res.status(404).send({ error: error.message });
+  }
 };
 
 export const updateBook = (req, res) => {
